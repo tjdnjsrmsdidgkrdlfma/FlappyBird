@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    public float destroy_time;
-
-    float temp;
+    float destroy_time;
+    float move_speed;
 
     void Start()
     {
+        SetDefaultValue();
+
         StartCoroutine(DestroySelf());
+    }
+
+    void SetDefaultValue()
+    {
+        destroy_time = GameManager.instance.destroy_time;
+        move_speed = GameManager.instance.move_speed;
     }
 
     IEnumerator DestroySelf()
@@ -23,8 +30,15 @@ public class Wall : MonoBehaviour
 
     void FixedUpdate()
     {
+        MoveWall();
+    }
+
+    void MoveWall()
+    {
+        float temp;
+
         temp = transform.position.x;
-        Vector2 position = new Vector2(temp - 0.1f, 0);
+        Vector2 position = new Vector2(temp - move_speed, 0);
         transform.position = position;
     }
 }

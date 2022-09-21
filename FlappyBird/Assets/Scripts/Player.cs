@@ -5,25 +5,26 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float fall_power;
-    public float jump_power;
+    float jump_power;
+    float fall_power;
 
     bool jump = false;
     bool on_jump_delay = false;
     bool falling = false;
 
-    GameObject gamemanager;
     Rigidbody2D rigidbody2d;
-
-    void Awake()
-    {
-        //gamemanager = GameObject.Find("GameManager");
-        rigidbody2d = GetComponent<Rigidbody2D>();
-    }
 
     void Start()
     {
+        SetDefaultValue();
+    }
 
+    void SetDefaultValue()
+    {
+        jump_power = GameManager.instance.jump_power;
+        fall_power = GameManager.instance.fall_power;
+        
+        rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -34,7 +35,6 @@ public class Player : MonoBehaviour
     void GetInput()
     {
         if (Input.GetMouseButtonDown(0) == true)
-            //jump = !jump;
             jump = true;
         else
             jump = false;

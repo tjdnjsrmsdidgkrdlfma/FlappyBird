@@ -6,23 +6,24 @@ public class InGameManager : MonoBehaviour
 {
     float spawn_wall_delay;
 
-    GameObject gamemanager;
     GameObject player;
     GameObject walls_prefab;
     GameObject up_down_walls_prefab;
 
-    void Awake()
+    void Start()
     {
+        SetDefaultValue();
+
+        StartCoroutine(SpawnWalls());
+    }
+
+    void SetDefaultValue()
+    {
+        spawn_wall_delay = GameManager.instance.spawn_wall_delay;
+
         player = GameObject.Find("Player");
         walls_prefab = Resources.Load("Prefabs/Walls") as GameObject;
         up_down_walls_prefab = Resources.Load("Prefabs/UpDownWalls") as GameObject;
-    }
-
-    void Start()
-    {
-        spawn_wall_delay = 2f;
-
-        StartCoroutine(SpawnWalls());
     }
 
     IEnumerator SpawnWalls()
