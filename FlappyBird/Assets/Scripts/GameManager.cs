@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager instance;
+
+    public int score;
 
     #region 플레이어 관련 변수
     public float jump_power;
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        score = 0;
 
         jump_power = 50f;
         fall_power = 2.5f;

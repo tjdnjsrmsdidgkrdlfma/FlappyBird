@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -9,6 +11,8 @@ public class InGameManager : MonoBehaviour
     GameObject player;
     GameObject walls_prefab;
     GameObject up_down_walls_prefab;
+    GameObject Canvas;
+    TextMeshProUGUI score;
 
     void Start()
     {
@@ -24,6 +28,8 @@ public class InGameManager : MonoBehaviour
         player = GameObject.Find("Player");
         walls_prefab = Resources.Load("Prefabs/Walls") as GameObject;
         up_down_walls_prefab = Resources.Load("Prefabs/UpDownWalls") as GameObject;
+        Canvas = GameObject.Find("Canvas");
+        score = GameObject.Find("Canvas/Score").GetComponent<TextMeshProUGUI>();
     }
 
     IEnumerator SpawnWalls()
@@ -42,5 +48,18 @@ public class InGameManager : MonoBehaviour
             Instantiate(walls_prefab, walls, Quaternion.identity);
             Instantiate(up_down_walls_prefab, up_down_walls, Quaternion.identity);
         }
+    }
+
+    void Update()
+    {
+        score.text = GameManager.instance.score.ToString();
+    }
+
+    public void OnDeath()
+    {
+        Time.timeScale = 0;
+        Canvas.transform.Find("OnDeath").gameObject.SetActive(true);
+        Canvas.transform.Find("OnDeath").transform.Find("BestScore").GetComponent<TextMeshProUGUI>().text = "Best Score: "; // 나중에 추가
+        Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "Current Score: " + GameManager.instance.score;
     }
 }

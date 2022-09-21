@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     bool on_jump_delay = false;
     bool falling = false;
 
+    GameObject in_game_manager;
     Rigidbody2D rigidbody2d;
 
     void Start()
@@ -23,7 +24,8 @@ public class Player : MonoBehaviour
     {
         jump_power = GameManager.instance.jump_power;
         fall_power = GameManager.instance.fall_power;
-        
+
+        in_game_manager = GameObject.Find("InGameManager");
         rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
@@ -95,7 +97,12 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall") == true)
         {
-            Debug.Log("Game Over");
+            in_game_manager.GetComponent<InGameManager>().OnDeath();
         }
+        else if (other.gameObject.CompareTag("CheckPassWall") == true)
+        {
+            GameManager.instance.score++;
+            Debug.Log(GameManager.instance.score);
+        }  
     }
 }
