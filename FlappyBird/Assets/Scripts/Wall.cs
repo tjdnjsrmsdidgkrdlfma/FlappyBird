@@ -38,7 +38,7 @@ public class Wall : MonoBehaviour
         float temp;
 
         temp = transform.position.x;
-        Vector2 position = new Vector2(temp - move_speed, 0);
+        Vector2 position = new Vector2(temp - move_speed, this.transform.position.y);
         transform.position = position;
     }
 }
