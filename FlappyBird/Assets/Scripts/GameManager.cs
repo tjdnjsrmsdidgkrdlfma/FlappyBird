@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int score;
+    public int highest_score;
 
     #region 플레이어 관련 변수
     public float jump_power;

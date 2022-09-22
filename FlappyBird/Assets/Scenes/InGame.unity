@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  highest_score: 0
   jump_power: 0
   fall_power: 0
   spawn_wall_delay: 0

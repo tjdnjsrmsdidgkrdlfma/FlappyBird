@@ -38,15 +38,15 @@ public class InGameManager : MonoBehaviour
 
         while(true)
         {
-            yield return new WaitForSeconds(spawn_wall_delay);
+            random_y_value = Random.Range(-2.9f, 2.9f);
 
-            random_y_value = Random.Range(-2f, 2f);
-
-            Vector2 walls = new Vector2(player.transform.position.x + 2.8f, random_y_value); //2.8
-            Vector2 up_down_walls = new Vector2(player.transform.position.x + 2.8f, 0);
+            Vector2 walls = new Vector2(player.transform.position.x + 4f, -100); 
+            Vector2 up_down_walls = new Vector2(player.transform.position.x + 4f, 0);
 
             Instantiate(walls_prefab, walls, Quaternion.identity);
             Instantiate(up_down_walls_prefab, up_down_walls, Quaternion.identity);
+
+            yield return new WaitForSeconds(spawn_wall_delay);
         }
     }
 

@@ -378,6 +378,7 @@
 "Assets/Scripts/CheckPassWall.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/InGameManager.cs"
+"Assets/Scripts/MainScreenManager.cs"
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/Wall.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
