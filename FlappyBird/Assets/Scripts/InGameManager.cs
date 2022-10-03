@@ -7,16 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
+    public int score;
+
     float spawn_wall_delay;
+    bool on_ready = false;
 
     GameObject walls_prefab;
     GameObject up_down_walls_prefab;
     GameObject Canvas;
-    TextMeshProUGUI score;
+    TextMeshProUGUI score_text;
 
     void Start()
     {
         SetDefaultValue();
+
+        StartCoroutine(PrepareTime());
 
         StartCoroutine(SpawnWalls());
     }
@@ -28,7 +33,30 @@ public class InGameManager : MonoBehaviour
         walls_prefab = Resources.Load("Prefabs/Walls") as GameObject;
         up_down_walls_prefab = Resources.Load("Prefabs/UpDownWalls") as GameObject;
         Canvas = GameObject.Find("Canvas");
-        score = GameObject.Find("Canvas/Score").GetComponent<TextMeshProUGUI>();
+        score_text = GameObject.Find("Canvas/Score").GetComponent<TextMeshProUGUI>();
+    }
+
+    IEnumerator PrepareTime()
+    {
+        on_ready = true;
+        Time.timeScale = 0;
+
+        TextMeshProUGUI temp = GameObject.Find("Canvas/Score").GetComponent<TextMeshProUGUI>();
+        int i;
+
+        for (i = 3; i != 0; i--)
+        {
+            temp.text = i.ToString(); Debug.Log(i);
+
+            yield return new WaitForSecondsRealtime(1.0f);
+        }
+
+        temp.text = "Start!";
+
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        on_ready = false;
+        Time.timeScale = 1;
     }
 
     IEnumerator SpawnWalls()
@@ -51,24 +79,39 @@ public class InGameManager : MonoBehaviour
 
     void Update()
     {
-        score.text = GameManager.instance.score.ToString();
+        if(on_ready == false)
+            score_text.text = score.ToString();
     }
 
     public void OnDeath()
     {
         Time.timeScale = 0;
+
         Canvas.transform.Find("OnDeath").gameObject.SetActive(true);
-        Canvas.transform.Find("OnDeath").transform.Find("BestScore").GetComponent<TextMeshProUGUI>().text = "Best Score: "; // 나중에 추가
-        Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "Current Score: " + GameManager.instance.score;
+
+        if (score > GameManager.instance.highest_score)
+        {
+            GameManager.instance.highest_score = score;
+            GameManager.instance.GetComponent<GameManager>().Save();
+            Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "New Record";
+        }
+        else
+        {
+            Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "Current Score: " + score;
+        }
+
+        Canvas.transform.Find("OnDeath").transform.Find("BestScore").GetComponent<TextMeshProUGUI>().text = "Best Score: " + GameManager.instance.highest_score;
     }
 
     public void RestartGameButtonClicked()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("InGame");
     }
 
     public void GoToMainScreenButtonClicked()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainScreen");
     }
 }

@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("CheckPassWall") == true)
         {
-            GameManager.instance.score++;
+            in_game_manager.GetComponent<InGameManager>().score++;
         }
     }
 }

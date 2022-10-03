@@ -8,36 +8,36 @@ public class MainScreenManager : MonoBehaviour
 {
     bool is_starting = false;
 
-    TextMeshProUGUI press_start;
+    GameObject quit_or_not;
 
     void Awake()
     {
-        press_start = GameObject.Find("Canvas/PressStart").GetComponent<TextMeshProUGUI>();
+        quit_or_not = GameObject.Find("Canvas").transform.Find("QuitOrNot").gameObject;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+            //quit_or_not.SetActive(true);
+        }
     }
 
     public void OnStartButtonClick()
     {
         if (is_starting == false)
-            StartCoroutine(StartGame());
+            SceneManager.LoadScene("InGame");
     }
 
-    IEnumerator StartGame()
+    public void OnQuitButtonClick()
     {
-        is_starting = true;
+        GameManager.instance.Save();
+        Application.Quit();
+    }
 
-        int i;
-
-        for (i = 3; i != 0; i--)
-        {
-            press_start.text = i.ToString();
-
-            yield return new WaitForSeconds(1.0f);
-        }
-
-        press_start.text = "Start!";
-
-        yield return new WaitForSeconds(1.0f);
-
-        SceneManager.LoadScene("InGame");
+    public void OnNotButtonClick()
+    {
+        quit_or_not.SetActive(false);
     }
 }
