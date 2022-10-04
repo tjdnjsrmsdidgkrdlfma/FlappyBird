@@ -17,7 +17,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
@@ -1745,4 +1744,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/DontDestroyOnLoad.unity
   - Assets/Scenes/MainScreen.unity
   - Assets/Scenes/InGame.unity
-  playerPath: C:/Users/werwer/Desktop/FlappyBird.apk
+  playerPath: C:/Users/werwer/Desktop/FlappyBird_.apk

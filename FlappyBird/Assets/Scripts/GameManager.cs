@@ -26,27 +26,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        GameObject[] temp = GameObject.FindGameObjectsWithTag("GameManager");
-
-        if (temp.Length == 1)
-        {
-            DontDestroyOnLoad(temp[0]);
-        }
-        else
-        {
-            int i;
-            for (i = 1; i < temp.Length; i++)
-            {
-                Destroy(temp[i].gameObject);
-            }
-        }
-
         instance = this;
 
         file_name = "file_p";
         file_path = Application.persistentDataPath + "/" + file_name + ".json";
 
-        jump_power = 35f;
+        jump_power = 5f;
 
         spawn_wall_delay = 2f;
         destroy_time = 5f;

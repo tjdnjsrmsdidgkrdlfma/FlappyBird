@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     float jump_power;
 
     bool jump = false;
-    bool on_jump_delay = false;
 
     GameObject in_game_manager;
     Rigidbody2D rigidbody2d;
@@ -41,39 +40,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (jump == true && on_jump_delay == false)
-        //{
-            //StartCoroutine(Jump());
-            if(jump==true)
-            Jump_();
-        //}
+        if (jump == true)
+            Jump();
     }
 
-    IEnumerator Jump()
+    void Jump()
     {
-        on_jump_delay = true;
-
-        int i;
-        float temp = jump_power;
-
-        for (i = 0; i < 10; i++)
-        {
-            temp = Mathf.Lerp(temp, 0, 0.5f);
-
-            rigidbody2d.velocity = new Vector2(0, temp);
-
-            yield return new WaitForSeconds(0.01f);
-        }
-
         rigidbody2d.velocity = Vector2.zero;
-
-        on_jump_delay = false;
-    }
-
-    void Jump_()
-    {
-        Debug.Log("A");
-        rigidbody2d.AddForce(Vector2.up);
+        rigidbody2d.AddForce(Vector2.up * jump_power, ForceMode2D.Impulse);
     }
 
     void OnTriggerEnter2D(Collider2D other)
