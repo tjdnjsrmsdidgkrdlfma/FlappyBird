@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     #region 플레이어 관련 변수
     public float jump_power;
-    public float fall_power;
     #endregion
 
     #region 벽 관련 변수
@@ -48,7 +47,6 @@ public class GameManager : MonoBehaviour
         file_path = Application.persistentDataPath + "/" + file_name + ".json";
 
         jump_power = 35f;
-        fall_power = 2.5f;
 
         spawn_wall_delay = 2f;
         destroy_time = 5f;

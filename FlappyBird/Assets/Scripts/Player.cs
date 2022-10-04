@@ -6,11 +6,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     float jump_power;
-    float fall_power;
 
     bool jump = false;
     bool on_jump_delay = false;
-    bool falling = false;
 
     GameObject in_game_manager;
     Rigidbody2D rigidbody2d;
@@ -23,7 +21,6 @@ public class Player : MonoBehaviour
     void SetDefaultValue()
     {
         jump_power = GameManager.instance.jump_power;
-        fall_power = GameManager.instance.fall_power;
 
         in_game_manager = GameObject.Find("InGameManager");
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -44,20 +41,17 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (jump == true && on_jump_delay == false)
-        {
-            StartCoroutine(Jump());
-        }
-        else if (jump == false && on_jump_delay == false && falling == false)
-        {
-            StartCoroutine(Fall());
-        }
+        //if (jump == true && on_jump_delay == false)
+        //{
+            //StartCoroutine(Jump());
+            if(jump==true)
+            Jump_();
+        //}
     }
 
     IEnumerator Jump()
     {
         on_jump_delay = true;
-        falling = false;
 
         int i;
         float temp = jump_power;
@@ -76,21 +70,10 @@ public class Player : MonoBehaviour
         on_jump_delay = false;
     }
 
-    IEnumerator Fall()
+    void Jump_()
     {
-        falling = true;
-
-        int i;
-        float temp = 0;
-
-        for (i = 0; i < 10; i++)
-        {
-            temp = Mathf.Lerp(temp, fall_power, 0.5f);
-
-            rigidbody2d.velocity = new Vector2(0, temp) * -1;
-
-            yield return new WaitForSeconds(0.01f);
-        }
+        Debug.Log("A");
+        rigidbody2d.AddForce(Vector2.up);
     }
 
     void OnTriggerEnter2D(Collider2D other)

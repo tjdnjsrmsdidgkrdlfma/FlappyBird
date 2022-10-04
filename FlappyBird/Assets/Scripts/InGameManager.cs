@@ -46,7 +46,7 @@ public class InGameManager : MonoBehaviour
 
         for (i = 3; i != 0; i--)
         {
-            temp.text = i.ToString(); Debug.Log(i);
+            temp.text = i.ToString();
 
             yield return new WaitForSecondsRealtime(1.0f);
         }

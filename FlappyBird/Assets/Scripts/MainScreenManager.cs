@@ -19,8 +19,7 @@ public class MainScreenManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
-            //quit_or_not.SetActive(true);
+            quit_or_not.SetActive(true);
         }
     }
 
