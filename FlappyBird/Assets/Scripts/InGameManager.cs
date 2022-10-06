@@ -11,11 +11,13 @@ public class InGameManager : MonoBehaviour
 
     float spawn_wall_delay;
     bool on_ready = false;
+    bool on_game = false;
 
     GameObject walls_prefab;
     GameObject up_down_walls_prefab;
     GameObject Canvas;
     TextMeshProUGUI score_text;
+    AudioSource audiosource;
 
     void Start()
     {
@@ -34,6 +36,7 @@ public class InGameManager : MonoBehaviour
         up_down_walls_prefab = Resources.Load("Prefabs/UpDownWalls") as GameObject;
         Canvas = GameObject.Find("Canvas");
         score_text = GameObject.Find("Canvas/Score").GetComponent<TextMeshProUGUI>();
+        audiosource = GetComponent<AudioSource>();
     }
 
     IEnumerator PrepareTime()
@@ -56,6 +59,7 @@ public class InGameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.0f);
 
         on_ready = false;
+        on_game = true;
         Time.timeScale = 1;
     }
 
@@ -79,12 +83,18 @@ public class InGameManager : MonoBehaviour
 
     void Update()
     {
-        if(on_ready == false)
+        if (on_ready == false)
             score_text.text = score.ToString();
+        if (on_game == true && audiosource.isPlaying == false)
+            audiosource.Play();
+        //if (on_game == false && audiosource.isPlaying == true)
+            //audiosource.Stop();
     }
 
     public void OnDeath()
     {
+        on_game = false;
+        audiosource.Stop();
         Time.timeScale = 0;
 
         Canvas.transform.Find("OnDeath").gameObject.SetActive(true);
@@ -93,10 +103,14 @@ public class InGameManager : MonoBehaviour
         {
             GameManager.instance.highest_score = score;
             GameManager.instance.GetComponent<GameManager>().Save();
+            audiosource.clip = Resources.Load("Sounds/OnNewRecord") as AudioClip;
+            audiosource.Play();
             Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "New Record";
         }
         else
         {
+            audiosource.clip = Resources.Load("Sounds/OnDeath") as AudioClip;
+            audiosource.Play();
             Canvas.transform.Find("OnDeath").transform.Find("CurrentScore").GetComponent<TextMeshProUGUI>().text = "Current Score: " + score;
         }
 

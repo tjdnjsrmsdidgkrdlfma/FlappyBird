@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
+
         instance = this;
 
         file_name = "file_p";
